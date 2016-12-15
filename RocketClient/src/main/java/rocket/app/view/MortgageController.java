@@ -1,9 +1,15 @@
 package rocket.app.view;
 
 import eNums.eAction;
+import exceptions.RateException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import rocket.app.MainApp;
+import rocketBase.RateBLL;
 import rocketCode.Action;
 import rocketData.LoanRequest;
 
@@ -23,10 +29,48 @@ public class MortgageController {
 	//		Button   -  button to calculate the loan payment
 	//		Label    -  to show error messages (exception throw, payment exception)
 
+	@FXML
+	private Label Income;
+	@FXML
+	private Label Expenses;
+	@FXML
+	private Label CreditScore;
+	@FXML
+	private Label HouseCost;
+
+	@FXML
+	private Label Term;
+	@FXML
+	private TextField txtIncome;
+	@FXML
+	private TextField txtExpenses;
+	@FXML
+	private TextField txtCreditScore;
+	@FXML
+	private TextField txtHouseCost;
+	@FXML
+	private ComboBox<String> cmbTerm;
+	@FXML
+	private Button calculate;
+	@FXML 
+	private Label MortgagePayment;
+	@FXML 
+	private Label Error;
+	@FXML 
+	private Label ErrorWarning;
+	@FXML
+	private Label lblMortgagePayment;
+	
+	
+	@FXML
+	private void cmbBox() {
+		cmbTerm.getItems().add("15 Years");
+		cmbTerm.getItems().add("30 Years");
+	}
+	
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
-	
 	
 	//	TODO - RocketClient.RocketMainController
 	//			Call this when btnPayment is pressed, calculate the payment
@@ -39,9 +83,24 @@ public class MortgageController {
 		Action a = new Action(eAction.CalculatePayment);
 		LoanRequest lq = new LoanRequest();
 		//	TODO - RocketClient.RocketMainController
-		//			set the loan request details...  rate, term, amount, credit score, downpayment
-		//			I've created you an instance of lq...  execute the setters in lq
-
+		try{
+			lq.setdRate(RateBLL.getRate(lq.getiCreditScore()));
+		}
+		catch (RateException e){
+			lq.setdRate(0);
+			ErrorWarning.setText("Invalid Credit Score");
+		}
+		if (cmbTerm.getValue()=="15 Years") {
+			lq.setiTerm(15*12);
+		}
+		else if(cmbTerm.getValue() == "30 Years") {
+			lq.setiTerm(30*12);
+		}
+		lq.setiCreditScore(Integer.parseInt(txtCreditScore.getText()));
+		lq.setiDownPayment(Integer.parseInt(txtHouseCost.getText()));
+		
+		lq.setdIncome(Double.parseDouble(txtIncome.getText()));
+		lq.setdExpenses(Double.parseDouble(txtExpenses.getText()));
 		a.setLoanRequest(lq);
 		
 		//	send lq as a message to RocketHub		
@@ -51,10 +110,8 @@ public class MortgageController {
 	public void HandleLoanRequestDetails(LoanRequest lRequest)
 	{
 		//	TODO - RocketClient.HandleLoanRequestDetails
-		//			lRequest is an instance of LoanRequest.
-		//			after it's returned back from the server, the payment (dPayment)
-		//			should be calculated.
-		//			Display dPayment on the form, rounded to two decimal places
-		
+		double Payment = lRequest.getdPayment();
+		if (Payment<= 0.36*(lRequest.getdIncome()/12) && Payment <= 0.28*(lRequest.getdIncome()/12 - lRequest.getdExpenses())) {
+			System.out.format("%.2f", Payment);
 	}
-}
+}}
