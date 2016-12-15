@@ -20,9 +20,9 @@ public class Rate_Test {
 	@Test
 	public void test() {
 		
-		//ArrayList<RateDomainModel> rates = RateDAL.getAllRates();
-		//System.out.println ("Rates size: " + rates.size());
-		//assert(rates.size() > 0);
+		ArrayList<RateDomainModel> rates = RateDAL.getAllRates();
+		System.out.println ("Rates size: " + rates.size());
+		assert(rates.size() > 0);
 		
 		assert(1==1);
 	}

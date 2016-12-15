@@ -16,6 +16,21 @@ public class LoanRequest implements Serializable {
 	//			Income
 	//			Expenses
 	//			Add these attributes to the class... add getters and setters.
+	private double dIncome;
+	private double dExpenses;
+
+	public double getdIncome() {
+		return dIncome;
+	}
+	public void setdIncome(double dIncome) {
+		this.dIncome = dIncome;
+	}
+	public double getdExpenses() {
+		return dExpenses;
+	}
+	public void setdExpenses(double dExpenses) {
+		this.dExpenses = dExpenses;
+	}
 	
 	public LoanRequest() {
 		super();
