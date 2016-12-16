@@ -31,8 +31,8 @@ public class RateDAL {
 			Query query = session.createQuery(hql);
 			List results = query.list();
 			
-			List lstRates = session.createQuery("FROM RateDomainModel").list();
-			for (Iterator iterator = lstRates.iterator(); iterator.hasNext();) {
+			List lRates = session.createQuery("FROM RateDomainModel").list();
+			for (Iterator iterator = lRates.iterator(); iterator.hasNext();) {
 				RateDomainModel rte = (RateDomainModel) iterator.next();
 				alRates.add(rte);
 			}
