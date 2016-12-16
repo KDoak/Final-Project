@@ -12,14 +12,12 @@ public class RateException extends Exception {
 	private RateDomainModel rateDomainModel;
 	
 	public RateException(){
-		System.out.println("Rate is invalid.");
+		System.out.println("Loan cannot go through.");
 	}
 	public RateException(RateDomainModel rateDomainModel){
-		ArrayList <RateDomainModel> iRates = new ArrayList <RateDomainModel> (RateDAL.getAllRates());
-		if (!(iRates.contains(rateDomainModel.getdInterestRate()))) {
-			System.out.println("Rate is invalid.");
+		this.rateDomainModel = rateDomainModel;
 		}
-	}
+	
 	public RateDomainModel getRateDomainModel(){
 		return rateDomainModel;
 	}

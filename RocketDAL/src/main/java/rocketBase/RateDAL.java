@@ -27,7 +27,7 @@ public class RateDAL {
 			
 			//TODO - RocketDALRateDAL.getAllRates
 			
-			String hql = ("from RateDomainModel ORDER BY iMinCreditScore DESC");
+			String hql = ("from RateDomainModel TBLRATE ORDER BY TBLRATE.iMinCreditScore DESC");
 			Query query = session.createQuery(hql);
 			List results = query.list();
 			

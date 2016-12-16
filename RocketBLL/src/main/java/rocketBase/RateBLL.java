@@ -15,13 +15,13 @@ public class RateBLL {
 	{
 		//TODO - RocketBLL RateBLL.getRate - make sure you throw any exception
 		
-		ArrayList <RateDomainModel> iRates = new ArrayList <RateDomainModel> (RateDAL.getAllRates());
+		ArrayList <RateDomainModel> aRates = new ArrayList <RateDomainModel> (RateDAL.getAllRates());
 		double finishediRate = 0;
-		for(RateDomainModel iRate : iRates) {
-			if(GivenCreditScore == iRate.getiMinCreditScore()) {
-				finishediRate = iRate.getdInterestRate();
+		for(RateDomainModel Rate : aRates) {
+			if(GivenCreditScore == Rate.getiMinCreditScore()) {
+				finishediRate = Rate.getdInterestRate();
 			}
-			else if (iRates.contains(iRate.getdInterestRate())){
+			else if (aRates.contains(Rate.getdInterestRate())){
 				//If rate is matching pre-existing rate, keep calm and carry on
 				continue;	
 			}
